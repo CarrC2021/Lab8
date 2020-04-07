@@ -19,6 +19,7 @@ public class MainActivity extends Activity
     private AnimationView myAV;
     private Button theButton;
     private SeekBar theSeekBar;
+    private AnimationThread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +37,14 @@ public class MainActivity extends Activity
         //Let me know when someone adjusts the seekbar
         theSeekBar = (SeekBar)findViewById(R.id.seekBar);
         theSeekBar.setOnSeekBarChangeListener(this);
+
+//        thread = new AnimationThread(myAV);
+//        thread.start();
     }//onClick
 
     @Override
     public void onClick(View v) {
-        myAV.postInvalidate();
+            myAV.postInvalidate();
     }
 
     @Override
