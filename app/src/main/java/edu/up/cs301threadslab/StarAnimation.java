@@ -20,10 +20,12 @@ public class StarAnimation extends Animation {
 
     /* when this is set to 'false' the next animation frame won't twinkle */
     private boolean twinkle = true;
+    private Thread thread;
 
     /** ctor expects to be told the size of the animation canvas */
     public StarAnimation(int initWidth, int initHeight) {
         super(initWidth, initHeight);
+
     }
 
     /** whenever the canvas size changes, generate new stars */
@@ -42,6 +44,7 @@ public class StarAnimation extends Animation {
     public void addStar() {
         //Ignore this call if the canvas hasn't been initialized yet
         if ((width <= 0) || (height <= 0)) return;
+        if (field.size() >= 999) return;
 
         int x = rand.nextInt(width);
         int y = rand.nextInt(height);
@@ -74,8 +77,15 @@ public class StarAnimation extends Animation {
     /** the seekbar progress specifies the brightnes of the stars. */
     @Override
     public void progressChange(int newProgress) {
-        int brightness = 255 - (newProgress * 2);
-        Star.starPaint.setColor(Color.rgb(brightness, brightness, brightness));
-        this.twinkle = false;
+        if (newProgress*10 > field.size()){
+            for (int i = 0; i < newProgress*10; i++){
+                addStar();
+            }
+        }
+        if (newProgress*10 < field.size()){
+            for (int i = 0; i < newProgress*10; i++){
+                removeStar();
+            }
+        }
     }
 }//class StarAnimation

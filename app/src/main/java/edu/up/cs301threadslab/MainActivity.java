@@ -20,6 +20,8 @@ public class MainActivity extends Activity
     private Button theButton;
     private SeekBar theSeekBar;
     private AnimationThread thread;
+    private StarAnimation starAnimation;
+    private RandomizeThread randomThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,8 @@ public class MainActivity extends Activity
 
         //Setup the animation(s)
         myAV = (AnimationView)findViewById(R.id.animationArea);
-        myAV.addAnimation(new StarAnimation(myAV.getMyWidth(), myAV.getMyHeight()));
+        starAnimation = new StarAnimation(myAV.getMyWidth(), myAV.getMyHeight());
+        myAV.addAnimation(starAnimation);
 
         //Let me know when someone taps the button
         theButton = (Button)findViewById(R.id.button);
@@ -40,17 +43,33 @@ public class MainActivity extends Activity
 
 //        thread = new AnimationThread(myAV);
 //        thread.start();
+//        randomThread = new RandomizeThread(starAnimation);
+//        randomThread.start();
     }//onClick
 
     @Override
     public void onClick(View v) {
+        for (int i = 0; i < 1000; i++) {
             myAV.postInvalidate();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         myAV.progressChange(seekBar.getProgress());
-        myAV.postInvalidate();
+        for (int i = 0; i < 1000; i++) {
+            myAV.postInvalidate();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /** These two methods aren't used */

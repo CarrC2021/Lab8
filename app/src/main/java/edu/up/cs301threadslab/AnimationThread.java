@@ -12,10 +12,11 @@ public class AnimationThread extends Thread {
         for(;;){
             view.postInvalidate();
             try {
-                this.sleep(3000);
+                this.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
+
 }
