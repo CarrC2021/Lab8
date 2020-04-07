@@ -20,7 +20,7 @@ public class RandomizeThread extends Thread {
         }
         else { starAnimation.removeStar();}
             try {
-                this.sleep(50);
+                this.sleep(40);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

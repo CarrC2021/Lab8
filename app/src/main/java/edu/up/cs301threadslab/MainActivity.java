@@ -41,35 +41,19 @@ public class MainActivity extends Activity
         theSeekBar = (SeekBar)findViewById(R.id.seekBar);
         theSeekBar.setOnSeekBarChangeListener(this);
 
-//        thread = new AnimationThread(myAV);
-//        thread.start();
-//        randomThread = new RandomizeThread(starAnimation);
-//        randomThread.start();
+        thread = new AnimationThread(myAV);
+        thread.start();
+        starAnimation.getThread().start();
     }//onClick
 
     @Override
     public void onClick(View v) {
-        for (int i = 0; i < 1000; i++) {
             myAV.postInvalidate();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         myAV.progressChange(seekBar.getProgress());
-        for (int i = 0; i < 1000; i++) {
-            myAV.postInvalidate();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     /** These two methods aren't used */
