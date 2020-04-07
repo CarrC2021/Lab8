@@ -21,7 +21,6 @@ public class MainActivity extends Activity
     private SeekBar theSeekBar;
     private AnimationThread thread;
     private StarAnimation starAnimation;
-    private RandomizeThread randomThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,15 +14,19 @@ public class RandomizeThread extends Thread {
     }
 
     @Override
-    public void run(){
-        if (random.nextBoolean()) {
-            starAnimation.addStar();
-        }
-        else { starAnimation.removeStar();}
+    public void run() {
+        for (; ; ) {
+
+            if (random.nextBoolean()) {
+                starAnimation.addStar();
+            } else {
+                starAnimation.removeStar();
+            }
             try {
                 this.sleep(40);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
     }
 }

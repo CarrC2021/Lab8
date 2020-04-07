@@ -42,36 +42,42 @@ public class StarAnimation extends Animation {
 
     /** adds a randomly located star to the field */
     public void addStar() {
-        //Ignore this call if the canvas hasn't been initialized yet
-        if ((width <= 0) || (height <= 0)) return;
-        if (field.size() >= 999) return;
+        synchronized (field) {
+            //Ignore this call if the canvas hasn't been initialized yet
+            if ((width <= 0) || (height <= 0)) return;
+            if (field.size() >= 999) return;
 
-        int x = rand.nextInt(width);
-        int y = rand.nextInt(height);
+            int x = rand.nextInt(width);
+            int y = rand.nextInt(height);
 
 
-        field.add(new Star(x, y));
+            field.add(new Star(x, y));
+        }
     }//addStar
 
     /** removes a random star from the field */
     public void removeStar() {
-        if (field.size() > 100) {
-            int index = rand.nextInt(field.size());
-            field.remove(index);
+        synchronized (field) {
+            if (field.size() > 100) {
+                int index = rand.nextInt(field.size());
+                field.remove(index);
+            }
         }
     }//removeStar
 
     /** draws the next frame of the animation */
     @Override
     public void draw(Canvas canvas) {
-        for (Star s : field) {
-            s.draw(canvas);
-            if (this.twinkle) {
-                s.twinkle();
+        synchronized (field) {
+            for (Star s : field) {
+                s.draw(canvas);
+                if (this.twinkle) {
+                    s.twinkle();
+                }
             }
-        }
 
-        this.twinkle = true;
+            this.twinkle = true;
+        }
     }//draw
 
     /** the seekbar progress specifies the brightnes of the stars. */
@@ -83,9 +89,9 @@ public class StarAnimation extends Animation {
             }
         }
         else {
-//            for (int i = 0; ){
-//                removeStar();
-//            }
+            for (int i = 0; i < field.size() - newProgress*10; i++){
+                removeStar();
+            }
         }
     }
 
